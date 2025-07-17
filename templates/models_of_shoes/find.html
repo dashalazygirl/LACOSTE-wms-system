@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block title %} find
+{% endblock %}
+{% block content %}
+<h2>Поиск</h2>
+	<div class="card col-4" >
+		<form>
+			{% csrf_token %}
+				{% bootstrap_form form %}
+				{% bootstrap_button button_type="submit" content="найти" %}
+		</form>
+	</div>
+{% endblock %}
+
+
+
+
+
+
+
+

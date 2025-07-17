@@ -1,0 +1,37 @@
+
+{% extends "base.html" %}
+
+{% block title %}
+  Shoes
+{% endblock %}
+
+{% block content %}
+  <h2>Кроссовки</h2>
+  <table id="table1" border="2">
+    <tr>
+      <th> артикул </th>
+      <th> модель </th>
+      <th> Размер </th>
+      <th> Цвет </th>
+      <th> Сезон </th>
+      <th> Склад </th>
+      <th></th>
+      <th></th>
+    </tr>
+    {% for prod in page_obj %}
+      <tr>
+
+        <td><a href="{% url 'models_of_shoes:detail' prod.id %}">{{prod.articul}}</a></td>
+        <td>{{prod.model_s}}</td>
+        <td>{{prod.size_r}}</td>
+        <td>{{prod.color}}</td>
+        <td>{{prod.season.name}}</td>
+        <td>{{prod.sclad.name}}</td>
+        <td><a href="{% url 'models_of_shoes:edit' prod.id %}"> &#9998; </a></td>
+        <td><a href="{% url 'models_of_shoes:delete' prod.id %}">  &#128722; </a></td>
+      </tr>
+    {% endfor %}
+  </table>
+{% include 'includes/paginator.html' %}
+{% endblock %}
+

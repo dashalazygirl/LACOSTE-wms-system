@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %} детализация {% endblock %}
+{% block content %}
+  ID записи: {{ object.id }}
+  <hr>
+
+  <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+    {# Первая картинка #}
+    {% if object.picture %}
+      <div style="width: 400px;">
+        <img src="{{ object.picture.url }}" alt="Основное изображение" style="width: 100%; height: 400px; object-fit: contain;">
+        <p>Склад</p>
+      </div>
+    {% endif %}
+
+    {# Вторая картинка #}
+    {% if object.picture_2 %}
+      <div style="width: 400px;">
+        <img src="{{ object.picture_2.url }}" alt="Дополнительное изображение" style="width: 100%; height: 400px; object-fit: contain;">
+        <p>Модель</p>
+      </div>
+    {% endif %}
+  </div>
+
+  <h3>Артикул: {{object.articul}}</h3>
+  <h3>Модель: {{object.model_s}}</h3>
+  <h4>Цвет: {{object.color}}</h4>
+  <h4>Короткий артикул: {{object.short}}</h4>
+  <h4>Пол: {{object.sex}}</h4>
+  <h4>Размер(франция): {{object.size_f}}</h4>
+  <h4>Размер(Россия): {{object.size_r}}</h4>
+  <h4>Сезон: {{object.season.name}}</h4>
+  <h4>Количество на складе: {{object.amount}}</h4>
+  <h4>Склад: {{ object.sclad.name }}</h4>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block title %}
+  Shoes
+{% endblock %}
+
+{% block content %}
+{% if form %}
+    {% with data=form.instance %}
+        {% if '/edit/' in request.path %}
+            <h2> Редактировать товар </h2>
+        {% elif '/delete/' in request.path %}
+            <h2> Удалить товар </h2>
+        {% else %}
+            <h2> Добавить товар </h2>
+        {% endif %}
+        <div class="card col-4">
+            <form method="post">
+                {% csrf_token %}
+                {% if not '/delete/' in request.path %}
+                    {% bootstrap_form form %}
+                {% else %}
+                    <p>{{data.model_s}} {{data.sex}} </p>
+                    <p>{{data.size_r}} {{data.color}}</p>
+                {% endif %}
+                {% if '/edit/' in request.path %}
+                    {% bootstrap_button button_type="submit" content="изменить" %}
+                {% elif '/delete/' in request.path %}
+                    {% bootstrap_button button_type="submit" content="удалить" %}
+                {% else %}
+                    {% bootstrap_button button_type="submit" content="добавить" %}
+                {% endif %}
+            </form>
+        </div>
+    {% endwith %}
+{% else %}
+    <h2>Кроссовки</h2>
+    <table id="table1" border="2">
+        <tr>
+            <th> артикул </th>
+            <th> модель </th>
+            <th> Размер </th>
+            <th> Цвет </th>
+            <th> Сезон </th>
+            <th> Склад </th>
+            <th></th>
+            <th></th>
+        </tr>
+        {% for prod in page_obj %}
+            <tr>
+                <td><a href="{% url 'models_of_shoes:detail' prod.id %}">{{prod.articul}}</a></td>
+                <td>{{prod.model_s}}</td>
+                <td>{{prod.size_r}}</td>
+                <td>{{prod.color}}</td>
+                <td>{{prod.season.name}}</td>
+                <td>{{prod.sclad.name}}</td>
+                <td><a href="{% url 'models_of_shoes:edit' prod.id %}"> &#9998; </a></td>
+                <td><a href="{% url 'models_of_shoes:delete' prod.id %}">  &#128722; </a></td>
+            </tr>
+        {% endfor %}
+    </table>
+    {% include 'includes/paginator.html' %}
+{% endif %}
+{% endblock %}

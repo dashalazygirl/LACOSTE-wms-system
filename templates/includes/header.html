@@ -1,0 +1,61 @@
+{% load static %}
+
+<header>
+    <nav class="navbar navbar-light" style="background-color: lightskyblue">
+      <div class="container ">
+        <a class="navbar-brand" href="{% url 'models_of_shoes:index' %}">
+          <img src="{% static 'img/fav/2025-06-18_18-31-57.png' %}" width="30" height="30" class="d-inline-block align-top" alt="">
+          Перечень товаров
+        </a>
+        {% with request.resolver_match.view_name as view_name %}
+          <ul class="nav  nav-pills">
+            <li class="nav-item">
+              <a class="nav-link {% if view_name == 'models_of_shoes:index' %} active {% endif %}" href="{% url 'models_of_shoes:index' %}">
+                Главная
+              </a>
+            </li>
+            {% if perms.models_of_shoes.add_event %}
+            <li class="nav-item">
+              <a class="nav-link {% if view_name == 'models_of_shoes:add' %} active {% endif %}" href="{% url 'models_of_shoes:add' %}">
+                Добавить товар
+              </a>
+            </li>
+            {% endif %}
+
+            <li class="nav-item">
+              <a class="nav-link {% if view_name == 'models_of_shoes:find_size' %} active {% endif %}" href="{% url 'models_of_shoes:find_size' %}">
+                Поиск по размеру
+              </a>
+            </li>
+            <li class="nav-item">
+             <a class="nav-link {% if view_name == 'models_of_shoes:find_articul' %} active {% endif %}" href="{% url 'models_of_shoes:find_articul' %}">
+                     Поиск по артикулу
+              </a>
+
+            </li>
+            <!-- Это блок ссылок для авторизованного пользователя -->
+          {% if user.is_authenticated %}
+
+            <span class="navbar-text">Пользователь: <b>{{ user.username }}</b></span>
+            <li class="nav-item">
+              <form id="logout-form" action="{% url 'logout' %}" method="post" style="display:inline-block;">
+                  {% csrf_token %}
+                   <button class="nav-link" type="submit" style="background-color: transparent; border: none; color: inherit;">Выйти</button>
+              </form>
+            </li>
+
+          {% else %}
+            <li class="nav-item">
+              <a class="nav-link{% if view_name == 'login' %} active {% endif %}" href="{% url 'login' %}">Войти</a>
+            </li>
+          {% endif %}
+          </ul>
+
+        {% endwith %}
+      </div>
+    </nav>
+</header>
+
+
+
+
